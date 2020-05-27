@@ -1,0 +1,52 @@
+{
+  "name": "vuepress-theme-minos",
+  "version": "1.0.0",
+  "description": "Port of Hexo Minos theme to VuePress",
+  "keywords": [
+    "vue",
+    "vuepress",
+    "blog",
+    "vuepress-theme",
+    "vuepress-blog",
+    "vuepress-theme-blog",
+    "vuepress-theme-minos"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": {
+    "name": "Ken Chen",
+    "email": "ken.3ds@gmail.com",
+    "url": "https://kencc.github.io/"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "files": [
+    "src/index.js"
+  ],
+  "devDependencies": {
+    "@vuepress/plugin-blog": "^1.9.2",
+    "@vuepress/plugin-pwa": "^1.5.0",
+    "@vuepress/plugin-search": "^1.4.0",
+    "bulma": "^0.6.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "markdown-it-prism": "^2.0.5",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
+    "vuepress": "^1.5.0",
+    "vuepress-plugin-flexsearch": "^0.1.0",
+    "vuepress-plugin-reading-time": "^0.1.1"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-brands-svg-icons": "^5.13.0",
+    "@fortawesome/free-regular-svg-icons": "^5.13.0",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/vue-fontawesome": "^0.1.9",
+    "dayjs": "^1.8.24",
+    "flexsearch": "github:nextapps-de/flexsearch"
+  }
+}
