@@ -2,6 +2,7 @@
 title: About
 date: 2020-5-21
 id: page
+layout: post
 ---
 
 # About

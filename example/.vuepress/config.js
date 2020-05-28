@@ -1,5 +1,5 @@
-// .vuepress/config.js
 module.exports = {
+  theme: "vuepress-theme-minos",
   title: "Minos",
   description: "VuePress theme - Minos",
   head: [
