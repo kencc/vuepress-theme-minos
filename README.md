@@ -2,7 +2,9 @@
 
 Minos is a simple and retro styled VuePress theme which ported from Hexo theme of the same name.
 
-## Example
+## Installation
+
+### Use example project
 
 Use Minos example project, you can build a powerful static website with Minos theme in minutes.
 
@@ -65,7 +67,7 @@ Ken Chen
 
 ### License
 
-Open sourced under the MIT license. See the [LICENSE] file for more details.
+Open sourced under the MIT license. See the [LICENSE](https://github.com/kencc/vuepress-theme-minos/blob/master/README.md) file for more details.
 
 ### Acknowledgements
 
