@@ -2,8 +2,7 @@
 
 Minos is a simple and retro styled VuePress theme which ported from Hexo theme of the same name.
 
-[![](https://i.imgur.com/VnWYFQW.gif)
-](https://)
+![image](https://i.imgur.com/VnWYFQW.gif)
 
 ## Installation
 
