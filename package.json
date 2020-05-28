@@ -1,6 +1,6 @@
 {
   "name": "vuepress-theme-minos",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Port of Hexo Minos theme to VuePress",
   "keywords": [
     "vue",
