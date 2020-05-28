@@ -2,12 +2,12 @@
 
 Minos is a simple and retro styled VuePress theme which ported from Hexo theme of the same name.
 
-## Quick Start
+## Example
 
-installation
+Use Minos example project, you can build a powerful static website with Minos theme in minutes.
 
 ```
-# install as a local dependency
+# download repository by git
 git clone https://github.com/kencc/vuepress-theme-minos.git
 
 # change directory
@@ -16,9 +16,15 @@ cd vuepress-theme-minos
 # install dependencies
 npm install
 
-# run dev build and serves it on a development server
+# run dev build and serves website on a development server
 npx vuepress dev example
 ```
+
+Visit http://localhost:8080/ to enjoy VuePress powered static website with Minos theme.
+
+## Options
+
+TBD
 
 ## Documentation
 
