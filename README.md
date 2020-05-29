@@ -34,7 +34,7 @@ TBD
 
 To check out [live examples](https://github.com/kencc/vuepress-theme-minos) and docs, visit [https://github.com/kencc/vuepress-theme-minos](https://github.com/kencc/vuepress-theme-minos)
 
-### Development
+## Development
 
 This project is built with
 
@@ -47,30 +47,34 @@ This project is built with
 
 Please refer to the documentation for Minos implementation details.
 
-### To-Do list
+## To-Do list
 
 - SEO
 - Multi-language support
 - More customization options for comment, share and search.
 
-### Author
+## Issue
 
-Ruipeng Zhang
+Any issues pls report to [here](https://github.com/kencc/vuepress-theme-minos/issues)
+
+## Author
+
+**Ruipeng Zhang**
 
 - [https://github.com/ppoffice](https://github.com/ppoffice)
 - [Hexo Minos](https://github.com/ppoffice/hexo-theme-minos)
 
-### Ported By
+## Ported By
 
-Ken Chen
+**Ken Chen**
 
 - [https://github.com/kencc](https://github.com/kencc)
 - [https://twitter.com/kencclove](https://twitter.com/kencclove)
 
-### License
+## License
 
 Open sourced under the MIT license. See the [LICENSE](https://github.com/kencc/vuepress-theme-minos/blob/master/README.md) file for more details.
 
-### Acknowledgements
+## Acknowledgements
 
 Thanks for [Ruipeng Zhang](https://github.com/ppoffice) creating the excellent theme.

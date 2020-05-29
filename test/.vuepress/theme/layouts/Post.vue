@@ -2,17 +2,14 @@
   <section class="section">
     <div class="container">
       <article class="article content gallery" itemscope itemprop="blogPost">
-        <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-          {{ $page.title }}
-        </h1>
-        <div
-          class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile"
-        >
+        <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">{{ $page.title }}</h1>
+        <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
           <span class="column is-narrow">
             <font-awesome-icon :icon="['far', 'calendar-alt']" />
-            <time :datetime="$page.frontmatter.date" itemprop="datePublished">
-              {{ resolvePostDate($page.frontmatter.date) }}
-            </time>
+            <time
+              :datetime="$page.frontmatter.date"
+              itemprop="datePublished"
+            >{{ resolvePostDate($page.frontmatter.date) }}</time>
           </span>
           <span class="column is-narrow article-category">
             <font-awesome-icon :icon="['far', 'folder']" />
@@ -22,24 +19,18 @@
                 $page.frontmatter.categories
               )"
               :href="'/categories/' + category"
-              >{{ category }}</a
-            >
+            >{{ category }}</a>
           </span>
           <span class="column is-narrow">
             {{ $page.readingTime.text }} (about
             {{ $page.readingTime.words }} words)
           </span>
         </div>
-        <Content
-          class="article-entry is-size-6-mobile"
-          itemprop="articleBody"
-        />
+        <Content class="article-entry is-size-6-mobile" itemprop="articleBody" />
 
         <div class="columns is-variable is-1 is-multiline is-mobile">
           <span class="column is-narrow" v-for="tag in tags">
-            <a class="tag is-light article-tag" @click="linkToTags(tag)"
-              >#{{ tag }}</a
-            >
+            <a class="tag is-light article-tag" @click="linkToTags(tag)">#{{ tag }}</a>
           </span>
         </div>
         <div class="columns is-mobile is-multiline article-nav">
@@ -52,9 +43,7 @@
         </div>
       </article>
       <div class="sharebox">
-        <mSharethis
-          share-this-embed-url="https://platform-api.sharethis.com/js/sharethis.js#property=5e7ab9fe192d8a0012be9a58&product=inline-share-buttons"
-        />
+        <mSharethis :share-this-embed-url="shareSettings.installURL" />
       </div>
       <div class="comments">
         <h3 class="title is-4">Comments</h3>
@@ -78,7 +67,7 @@ export default {
   name: "Post",
   data() {
     return {
-      allPages: {},
+      allPages: {}
     };
   },
   methods: {
@@ -99,7 +88,7 @@ export default {
     },
     linkToPages(path) {
       this.$router.push(path);
-    },
+    }
   },
   computed: {
     tags() {
@@ -157,6 +146,9 @@ export default {
       let nextIndex = this.pageIndex + 1;
       return this.allPostsPages[nextIndex].title;
     },
+    shareSettings() {
+      return this.$site.themeConfig.share || {};
+    }
   },
   created() {
     console.log("Post:", "this.$site", this.$site);
@@ -168,7 +160,7 @@ export default {
   },
   components: {
     Comment,
-    mSharethis,
-  },
+    mSharethis
+  }
 };
 </script>

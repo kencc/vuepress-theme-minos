@@ -53,5 +53,10 @@ module.exports = {
         link: "https://kencc.github.io/rss.xml",
       },
     ],
+    share: {
+      type: "sharethis",
+      installURL:
+        "https://platform-api.sharethis.com/js/sharethis.js#property=5e7ab9fe192d8a0012be9a58&product=inline-share-buttons",
+    },
   },
 };
