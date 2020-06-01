@@ -10,12 +10,12 @@ export default {
   props: {
     shareThisElementId: {
       type: String,
-      default: "st-2",
+      default: "st-2"
     },
     shareThisEmbedUrl: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
     // url: {
     //   type: String,
     //   default: window.location.href
@@ -43,6 +43,6 @@ export default {
     // };
     document.head.appendChild(shareScript);
     // }
-  },
+  }
 };
 </script>
