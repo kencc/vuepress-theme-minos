@@ -5,20 +5,18 @@
         <h4 class="title is-4" :id="year">{{ year }}</h4>
         <div class="articles">
           <div class="article content" v-for="item in groups[year]">
-            <time class="is-text-small" datetime itemprop="datePublished">{{
+            <time class="is-text-small" datetime itemprop="datePublished">
+              {{
               resolvePostDate(item.frontmatter.date)
-            }}</time>
+              }}
+            </time>
             <h6 class="title is-6">
-              <a :href="item.path">{{ item.title }}</a>
+              <router-link :to="item.path">{{ item.title }}</router-link>
             </h6>
           </div>
         </div>
       </div>
-      <nav
-        class="pagination is-centered is-rounded"
-        role="navigation"
-        aria-label="pagination"
-      >
+      <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
         <div
           class="pagination-previous"
           :class="{
@@ -26,9 +24,7 @@
             'is-hidden-mobile': !pagination.hasPrev,
           }"
         >
-          <a href="#" @click="switchPages(pagination.paginationIndex - 1)"
-            >Prev</a
-          >
+          <a href="#" @click="switchPages(pagination.paginationIndex - 1)">Prev</a>
         </div>
         <div
           class="pagination-next"
@@ -37,9 +33,7 @@
             'is-hidden-mobile': !pagination.hasNext,
           }"
         >
-          <a href="#" @click="switchPages(pagination.paginationIndex + 1)"
-            >Next</a
-          >
+          <a href="#" @click="switchPages(pagination.paginationIndex + 1)">Next</a>
         </div>
         <ul class="pagination-list is-hidden-mobile">
           <li v-for="(page, index) in pagination._paginationPages">
@@ -48,8 +42,7 @@
               :class="{ 'is-current': pagination.paginationIndex === index }"
               href="#"
               @click="switchPages(index)"
-              >{{ index + 1 }}</a
-            >
+            >{{ index + 1 }}</a>
           </li>
         </ul>
       </nav>
@@ -74,8 +67,8 @@ export default {
         paginationIndex: 0,
         pages: [],
         hasPrev: false,
-        hasNext: false,
-      },
+        hasNext: false
+      }
     };
   },
   methods: {
@@ -150,13 +143,13 @@ export default {
       pageIndex != intervallers.length - 1
         ? (vm.pagination.hasNext = true)
         : (vm.pagination.hasNext = false);
-    },
+    }
   },
   created() {
     this.getPages();
     this.getLengthPerPage();
     this.getIntervallers();
     this.getPaginationPages();
-  },
+  }
 };
 </script>

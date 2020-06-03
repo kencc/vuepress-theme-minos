@@ -13,13 +13,13 @@
           </span>
           <span class="column is-narrow article-category">
             <font-awesome-icon :icon="['far', 'folder']" />
-            <a
+            <router-link
               class="article-category-link"
               v-for="category in resolvePostCategories(
                 $page.frontmatter.categories
               )"
-              :href="'/categories/' + category"
-            >{{ category }}</a>
+              :to="'/categories/' + category"
+            >{{ category }}</router-link>
           </span>
           <span class="column is-narrow">
             {{ $page.readingTime.text }} (about
@@ -58,7 +58,6 @@ import Vue from "vue";
 import { Comment } from "@vuepress/plugin-blog/lib/client/components";
 import mSharethis from "@theme/components/mSharethis";
 
-// Dayjs
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
@@ -71,13 +70,11 @@ export default {
     };
   },
   methods: {
-    // 格式化文章時間
     resolvePostDate(date) {
       //return dayjs(date).format(this.$themeConfig.dateFormat || "MMM DD YYYY");
       return dayjs(date).fromNow();
     },
 
-    // 處理標籤資料
     resolvePostCategories(categories) {
       if (!categories || Array.isArray(categories)) return categories;
       return [categories];
@@ -149,14 +146,6 @@ export default {
     shareSettings() {
       return this.$site.themeConfig.share || {};
     }
-  },
-  created() {
-    console.log("Post:", "this.$site", this.$site);
-    console.log("Post:", "this.$page", this.$page);
-    console.log("Post:", "this.$page.excerpt", this.$page.excerpt);
-    console.log("Post:", "this.$Pagination", this.$pagination);
-    console.log("vm.allPostsPages", this.allPostsPages);
-    console.log("this.$route", this.$route);
   },
   components: {
     Comment,

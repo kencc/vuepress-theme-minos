@@ -1,9 +1,18 @@
 <template>
   <div id="global-layout">
-    <mNavbar @SearchBoxOn="showSearchBox" />
+    <mNavbar
+      @SearchBoxOn="toggleSearchBox"
+      @toggleMenu="toggleMenu"
+      :MobileMenuState="MobileMenuState"
+    />
     <component :is="layout" />
     <mFooter />
-    <mSearchBox :show="SearchBoxState" @SearchBoxOff="hideSearchBox" />
+    <mSearchBox
+      :show="SearchBoxState"
+      @hideSearchBox="hideSearchBox"
+      @showSearchBox="showSearchBox"
+      @toggleMenu="toggleMenu"
+    />
   </div>
 </template>
 
@@ -17,6 +26,7 @@ export default {
   data() {
     return {
       SearchBoxState: false,
+      MobileMenuState: false
     };
   },
   methods: {
@@ -26,6 +36,12 @@ export default {
     hideSearchBox() {
       this.SearchBoxState = false;
     },
+    toggleSearchBox() {
+      return (this.SearchBoxState = !this.SearchBoxState);
+    },
+    toggleMenu() {
+      return (this.MobileMenuState = !this.MobileMenuState);
+    }
   },
   computed: {
     layout() {
@@ -41,13 +57,20 @@ export default {
         return "Layout";
       }
       return "NotFound";
-    },
+    }
+  },
+  mounted() {
+    document.addEventListener("keydown", this.onHotkey);
+  },
+
+  beforeDestroy() {
+    document.addEventListener("keydown", this.onHotkey);
   },
   components: {
     mNavbar,
     mFooter,
     Archives,
-    mSearchBox,
-  },
+    mSearchBox
+  }
 };
 </script>

@@ -4,13 +4,12 @@ module.exports = {
   description: "VuePress theme - Minos",
   head: [
     ["link", { rel: "icon", href: "/assets/img/favicon.png" }],
-    ["script", { src: "https://kit.fontawesome.com/7a758086ba.js" }],
-    [
-      "script",
-      {
-        src: "//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js",
-      },
-    ],
+    // [
+    //   "script",
+    //   {
+    //     src: "//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js",
+    //   },
+    // ],
   ],
   markdown: {
     lineNumbers: true,

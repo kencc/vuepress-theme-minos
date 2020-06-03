@@ -8,32 +8,31 @@
       :key="page.key"
     >
       <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        <a :href="page.path" itemprop="url">{{ page.title }}</a>
+        <router-link :to="page.path" itemprop="url">{{ page.title }}</router-link>
       </h1>
-      <div
-        class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile"
-      >
+      <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
         <span class="column is-narrow">
           <font-awesome-icon :icon="['far', 'calendar-alt']" />
-          <time :datetime="page.frontmatter.date" itemprop="datePublished">{{
+          <time :datetime="page.frontmatter.date" itemprop="datePublished">
+            {{
             resolvePostDate(page.frontmatter.date)
-          }}</time>
+            }}
+          </time>
         </span>
         <span class="column is-narrow article-category">
           <font-awesome-icon :icon="['far', 'folder']" />
-          <a
+          <router-link
             class="article-category-link"
             v-for="category in resolvePostCategories(
               page.frontmatter.categories
             )"
-            :href="'/categories/' + category"
-            >{{ category }}</a
-          >
+            :to="'/categories/' + category"
+          >{{ category }}</router-link>
         </span>
-        <span class="column is-narrow"
-          >{{ page.readingTime.text }} (about
-          {{ page.readingTime.words }} words)</span
-        >
+        <span class="column is-narrow">
+          {{ page.readingTime.text }} (about
+          {{ page.readingTime.words }} words)
+        </span>
       </div>
       <!-- Summary & Excerpt -->
       <div class="article-entry is-size-6-mobile" itemprop="articleBody">
@@ -41,7 +40,7 @@
         <div v-html="page.excerpt"></div>
         <!-- <Content :page-key="page.key" slot-key="intro" /> -->
         <p class="article-more-link">
-          <a :href="page.path">Read More</a>
+          <router-link :to="page.path">Read More</router-link>
         </p>
       </div>
     </article>
@@ -70,15 +69,15 @@ export default {
     resolvePostCategories(categories) {
       if (!categories || Array.isArray(categories)) return categories;
       return [categories];
-    },
+    }
   },
   computed: {
     pages() {
       return this.$pagination.pages;
-    },
+    }
   },
   components: {
-    mPagination,
-  },
+    mPagination
+  }
 };
 </script>

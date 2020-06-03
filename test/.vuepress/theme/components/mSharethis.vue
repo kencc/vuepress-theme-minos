@@ -16,33 +16,26 @@ export default {
       type: String,
       required: true
     }
-    // url: {
-    //   type: String,
-    //   default: window.location.href
-    // }
+  },
+  methods: {
+    attachScript() {
+      const shareScript = document.createElement("script");
+      shareScript.setAttribute("src", this.shareThisEmbedUrl);
+      shareScript.setAttribute("async", "true");
+      document.head.appendChild(shareScript);
+    }
   },
   beforeDestroy() {
-    const element = document.getElementById(this.shareThisElementId);
-    if (element) {
-      element.style.display = "none";
+    const el = document.getElementById(this.shareThisElementId);
+    if (el) {
+      el.style.display = "none";
     }
   },
   mounted() {
-    // if (window.__sharethis__) {
-    //   window.__sharethis__.href = this.url;
-    //   const element = document.getElementById(this.shareThisElementId);
-    //   if (element) {
-    //     element.style.display = "block";
-    //   }
-    // } else {
-    const shareScript = document.createElement("script");
-    shareScript.setAttribute("src", this.shareThisEmbedUrl);
-    shareScript.setAttribute("async", "true");
-    // shareScript.onload = () => {
-    //   window.__sharethis__.href = this.url;
-    // };
-    document.head.appendChild(shareScript);
-    // }
+    this.attachScript();
+  },
+  updated() {
+    this.attachScript();
   }
 };
 </script>
