@@ -21,6 +21,11 @@ import mNavbar from "@theme/components/mNavbar";
 import mFooter from "@theme/components/mFooter";
 import Archives from "@theme/layouts/Archives";
 import mSearchBox from "@theme/components/mSearchBox";
+import Post from "@theme/layouts/Post";
+import Categories from "@theme/layouts/Categories";
+import Category from "@theme/layouts/Category";
+import Tags from "@theme/layouts/Tags";
+import Tag from "@theme/layouts/Tag";
 
 export default {
   data() {
@@ -70,7 +75,12 @@ export default {
     mNavbar,
     mFooter,
     Archives,
-    mSearchBox
+    mSearchBox,
+    Post,
+    Categories,
+    Category,
+    Tags,
+    Tag
   }
 };
 </script>

@@ -13,6 +13,7 @@ module.exports = {
   ],
   markdown: {
     lineNumbers: true,
+    anchor: { permalinkSymbol: "" },
   },
   themeConfig: {
     author: "Ken Chen",

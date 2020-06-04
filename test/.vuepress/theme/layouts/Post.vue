@@ -28,12 +28,12 @@
         </div>
         <Content class="article-entry is-size-6-mobile" itemprop="articleBody" />
 
-        <div class="columns is-variable is-1 is-multiline is-mobile">
+        <div v-if="$page.id" class="columns is-variable is-1 is-multiline is-mobile">
           <span class="column is-narrow" v-for="tag in tags">
             <a class="tag is-light article-tag" @click="linkToTags(tag)">#{{ tag }}</a>
           </span>
         </div>
-        <div class="columns is-mobile is-multiline article-nav">
+        <div v-if="$page.id" class="columns is-mobile is-multiline article-nav">
           <span class="column is-12-mobile is-half-desktop article-nav-prev">
             <a v-if="hasPrev" @click="linkToPages(prevLink)">{{ prevTitle }}</a>
           </span>

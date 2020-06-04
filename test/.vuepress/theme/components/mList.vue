@@ -37,7 +37,7 @@
       <!-- Summary & Excerpt -->
       <div class="article-entry is-size-6-mobile" itemprop="articleBody">
         {{ page.frontmatter.summary || page.summary }}
-        <div v-html="page.excerpt"></div>
+        <p v-html="page.excerpt"></p>
         <!-- <Content :page-key="page.key" slot-key="intro" /> -->
         <p class="article-more-link">
           <router-link :to="page.path">Read More</router-link>

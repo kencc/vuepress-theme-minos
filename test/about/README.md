@@ -1,15 +1,10 @@
 ---
-title: About
+title: About Minos
 date: 2020-5-21
 id: page
+layout: post
 ---
 
-# About
+A simple and retro styled Hexo theme, concentrating more on your ideas.
 
-這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容
-
-## 關於我
-
-這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容這是內容
-
-## 聯繫方式
+:tada: :100:

@@ -16,26 +16,36 @@ export default {
       type: String,
       required: true
     }
-  },
-  methods: {
-    attachScript() {
-      const shareScript = document.createElement("script");
-      shareScript.setAttribute("src", this.shareThisEmbedUrl);
-      shareScript.setAttribute("async", "true");
-      document.head.appendChild(shareScript);
-    }
+    // url: {
+    //   type: String,
+    //   default: window.location.href
+    // }
   },
   beforeDestroy() {
-    const el = document.getElementById(this.shareThisElementId);
-    if (el) {
-      el.style.display = "none";
+    const element = document.getElementById(this.shareThisElementId);
+    if (element) {
+      element.style.display = "none";
     }
   },
   mounted() {
-    this.attachScript();
-  },
-  updated() {
-    this.attachScript();
+    let url = window.location.href;
+    if (window.__sharethis__) {
+      window.__sharethis__.href = url;
+      window.__sharethis__.initialize();
+      const element = document.getElementById(this.shareThisElementId);
+      if (element) {
+        element.style.display = "block";
+      }
+      console.log("initialize shareThis");
+    } else {
+      const shareScript = document.createElement("script");
+      shareScript.setAttribute("src", this.shareThisEmbedUrl);
+      shareScript.setAttribute("async", "true");
+      shareScript.onload = () => {
+        window.__sharethis__.href = url;
+      };
+      document.head.appendChild(shareScript);
+    }
   }
 };
 </script>
