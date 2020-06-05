@@ -18,8 +18,5 @@ export default {
       return this.$currentTag;
     }
   },
-  created() {
-    console.log("TAG Page", this.$currentTag);
-  }
 };
 </script>

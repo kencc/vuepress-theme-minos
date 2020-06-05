@@ -1,9 +1,18 @@
 <template>
   <div id="global-layout">
-    <mNavbar @SearchBoxOn="showSearchBox" />
+    <mNavbar
+      @SearchBoxOn="toggleSearchBox"
+      @toggleMenu="toggleMenu"
+      :MobileMenuState="MobileMenuState"
+    />
     <component :is="layout" />
     <mFooter />
-    <mSearchBox :show="SearchBoxState" @SearchBoxOff="hideSearchBox" />
+    <mSearchBox
+      :show="SearchBoxState"
+      @hideSearchBox="hideSearchBox"
+      @showSearchBox="showSearchBox"
+      @toggleMenu="toggleMenu"
+    />
   </div>
 </template>
 
@@ -12,11 +21,17 @@ import mNavbar from "@theme/components/mNavbar";
 import mFooter from "@theme/components/mFooter";
 import Archives from "@theme/layouts/Archives";
 import mSearchBox from "@theme/components/mSearchBox";
+import Post from "@theme/layouts/Post";
+import Categories from "@theme/layouts/Categories";
+import Category from "@theme/layouts/Category";
+import Tags from "@theme/layouts/Tags";
+import Tag from "@theme/layouts/Tag";
 
 export default {
   data() {
     return {
       SearchBoxState: false,
+      MobileMenuState: false
     };
   },
   methods: {
@@ -26,6 +41,12 @@ export default {
     hideSearchBox() {
       this.SearchBoxState = false;
     },
+    toggleSearchBox() {
+      return (this.SearchBoxState = !this.SearchBoxState);
+    },
+    toggleMenu() {
+      return (this.MobileMenuState = !this.MobileMenuState);
+    }
   },
   computed: {
     layout() {
@@ -41,13 +62,25 @@ export default {
         return "Layout";
       }
       return "NotFound";
-    },
+    }
+  },
+  mounted() {
+    document.addEventListener("keydown", this.onHotkey);
+  },
+
+  beforeDestroy() {
+    document.addEventListener("keydown", this.onHotkey);
   },
   components: {
     mNavbar,
     mFooter,
     Archives,
     mSearchBox,
-  },
+    Post,
+    Categories,
+    Category,
+    Tags,
+    Tag
+  }
 };
 </script>

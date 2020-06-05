@@ -11,10 +11,10 @@
       <div class="container">
         <div class="columns is-variable is-1 is-multiline is-mobile">
           <span class="column is-narrow" v-for="tag in tags" :key="tag.name">
-            <a
+            <router-link
               class="tag is-light article-tag"
-              :href="tag.path"
-            >{{ tag.name }} ({{ tag.pages.length }})</a>
+              :to="tag.path"
+            >{{ tag.name }} ({{ tag.pages.length }})</router-link>
           </span>
         </div>
       </div>
@@ -28,9 +28,6 @@ export default {
     tags() {
       return this.$frontmatterKey.list;
     }
-  },
-  created() {
-    console.log("TAGS this.$frontmatterKey", this.$frontmatterKey);
   }
 };
 </script>

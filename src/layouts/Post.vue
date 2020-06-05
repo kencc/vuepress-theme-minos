@@ -13,13 +13,13 @@
           </span>
           <span class="column is-narrow article-category">
             <font-awesome-icon :icon="['far', 'folder']" />
-            <a
+            <router-link
               class="article-category-link"
               v-for="category in resolvePostCategories(
                 $page.frontmatter.categories
               )"
-              :href="'/categories/' + category"
-            >{{ category }}</a>
+              :to="'/categories/' + category"
+            >{{ category }}</router-link>
           </span>
           <span class="column is-narrow">
             {{ $page.readingTime.text }} (about
@@ -28,12 +28,12 @@
         </div>
         <Content class="article-entry is-size-6-mobile" itemprop="articleBody" />
 
-        <div class="columns is-variable is-1 is-multiline is-mobile">
+        <div v-if="$page.id" class="columns is-variable is-1 is-multiline is-mobile">
           <span class="column is-narrow" v-for="tag in tags">
             <a class="tag is-light article-tag" @click="linkToTags(tag)">#{{ tag }}</a>
           </span>
         </div>
-        <div class="columns is-mobile is-multiline article-nav">
+        <div v-if="$page.id" class="columns is-mobile is-multiline article-nav">
           <span class="column is-12-mobile is-half-desktop article-nav-prev">
             <a v-if="hasPrev" @click="linkToPages(prevLink)">{{ prevTitle }}</a>
           </span>
@@ -43,7 +43,7 @@
         </div>
       </article>
       <div class="sharebox">
-        <mSharethis :share-this-embed-url="shareSettings.installURL"></mSharethis>
+        <mSharethis :share-this-embed-url="shareSettings.installURL" />
       </div>
       <div class="comments">
         <h3 class="title is-4">Comments</h3>
@@ -58,7 +58,6 @@ import Vue from "vue";
 import { Comment } from "@vuepress/plugin-blog/lib/client/components";
 import mSharethis from "@theme/components/mSharethis";
 
-// Dayjs
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
@@ -71,13 +70,11 @@ export default {
     };
   },
   methods: {
-    // 格式化文章時間
     resolvePostDate(date) {
       //return dayjs(date).format(this.$themeConfig.dateFormat || "MMM DD YYYY");
       return dayjs(date).fromNow();
     },
 
-    // 處理標籤資料
     resolvePostCategories(categories) {
       if (!categories || Array.isArray(categories)) return categories;
       return [categories];
@@ -147,16 +144,8 @@ export default {
       return this.allPostsPages[nextIndex].title;
     },
     shareSettings() {
-      return this.$site.themeConfig.share || "";
+      return this.$site.themeConfig.share || {};
     }
-  },
-  created() {
-    console.log("Post:", "this.$site", this.$site);
-    console.log("Post:", "this.$page", this.$page);
-    console.log("Post:", "this.$page.excerpt", this.$page.excerpt);
-    console.log("Post:", "this.$Pagination", this.$pagination);
-    console.log("vm.allPostsPages", this.allPostsPages);
-    console.log("this.$route", this.$route);
   },
   components: {
     Comment,

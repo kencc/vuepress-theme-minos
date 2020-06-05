@@ -1,22 +1,146 @@
 <template>
-  <div class="searchbox ins-search" :class="{ 'is-show': show }">
+  <div class="searchbox ins-search" :class="{ 'show': show }">
     <div class="searchbox-mask"></div>
     <div class="searchbox-container ins-search-container">
       <div class="searchbox-input-wrapper">
         <input
+          ref="search"
           type="text"
           class="searchbox-input ins-search-input"
           placeholder="Type something..."
-          @focus="focused = true"
-          @blur="focused = false"
           @input="query = $event.target.value"
         />
-        <span class="searchbox-close ins-close ins-selectable" @click="closeSearchBox">
+        <span class="searchbox-close ins-close ins-selectable" @click="hideSearchBox">
           <font-awesome-icon :icon="['fa', 'times-circle']" />
         </span>
       </div>
       <div class="searchbox-result-wrapper ins-section-wrapper">
-        <div class="ins-section-container"></div>
+        <div class="ins-section-container">
+          <section class="ins-section" v-if="suggestions.posts.length !== 0">
+            <header class="ins-section-header">Posts</header>
+            <div
+              class="ins-selectable ins-search-item"
+              v-for="(item, index) in suggestions.posts"
+              data-url="item.link"
+              :key="index"
+              @click="goToLink(item.link)"
+            >
+              <header>
+                <svg
+                  class="svg-inline--fa fa-file fa-w-12"
+                  aria-hidden="true"
+                  data-prefix="fa"
+                  data-icon="file"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  data-fa-i2svg
+                >
+                  <path
+                    fill="currentColor"
+                    d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                  />
+                </svg>
+                <!-- <i class="fa fa-file"></i> -->
+                <span class="ins-title">{{ item.title }}</span>
+              </header>
+              <p class="ins-search-preview">{{ item.text }}</p>
+            </div>
+          </section>
+          <section class="ins-section" v-if="suggestions.pages.length !== 0">
+            <header class="ins-section-header">Pages</header>
+            <div
+              class="ins-selectable ins-search-item"
+              v-for="(item, index) in suggestions.pages"
+              data-url="item.link"
+              :key="index"
+              @click="goToLink(item.link)"
+            >
+              <header>
+                <svg
+                  class="svg-inline--fa fa-file fa-w-12"
+                  aria-hidden="true"
+                  data-prefix="fa"
+                  data-icon="file"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  data-fa-i2svg
+                >
+                  <path
+                    fill="currentColor"
+                    d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                  />
+                </svg>
+                <!-- <i class="fa fa-file"></i> -->
+                <span class="ins-title">{{ item.title }}</span>
+              </header>
+              <p class="ins-search-preview">{{ item.text }}</p>
+            </div>
+          </section>
+          <section class="ins-section" v-if="suggestions.categories.length !== 0">
+            <header class="ins-section-header">Categories</header>
+            <div
+              class="ins-selectable ins-search-item"
+              data-url="item.link"
+              v-for="(item, index) in suggestions.categories"
+              :key="index"
+              @click="goToLink(item.link)"
+            >
+              <header>
+                <svg
+                  class="svg-inline--fa fa-folder fa-w-16"
+                  aria-hidden="true"
+                  data-prefix="fa"
+                  data-icon="folder"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  data-fa-i2svg
+                >
+                  <path
+                    fill="currentColor"
+                    d="M464 128H272l-64-64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48z"
+                  />
+                </svg>
+                <!-- <i class="fa fa-folder"></i> -->
+                <span class="ins-title">{{ item.name }}</span>
+                <span class="ins-slug">{{ item.slug }}</span>
+              </header>
+            </div>
+          </section>
+          <section class="ins-section" v-if="suggestions.tags.length !== 0">
+            <header class="ins-section-header">Tags</header>
+            <div
+              class="ins-selectable ins-search-item"
+              data-url="item.link"
+              v-for="(item, index) in suggestions.tags"
+              :key="index"
+              @click="goToLink(item.link)"
+            >
+              <header>
+                <svg
+                  class="svg-inline--fa fa-tag fa-w-16"
+                  aria-hidden="true"
+                  data-prefix="fa"
+                  data-icon="tag"
+                  role="img"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  data-fa-i2svg
+                >
+                  <path
+                    fill="currentColor"
+                    d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"
+                  />
+                </svg>
+                <!-- <i class="fa fa-tag"></i> -->
+                <span class="ins-title">{{ item.name }}</span>
+                <span class="ins-slug">{{ item.slug }}</span>
+              </header>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   </div>
@@ -24,6 +148,7 @@
 
 <script>
 export default {
+  name: "mSearchbox",
   props: {
     show: {
       type: Boolean,
@@ -32,21 +157,21 @@ export default {
   },
   data() {
     return {
+      query: "",
+      focused: false,
       JSON: {
         posts: [],
         pages: [],
         tags: [],
         categories: []
       },
-      query: "",
-      focused: false,
       INSIGHT_CONFIG: {
         TRANSLATION: {
-          POSTS: "文章",
-          PAGES: "頁面",
-          CATEGORIES: "分類",
-          TAGS: "標籤",
-          UNTITLED: "(無標題)"
+          POSTS: "Posts",
+          PAGES: "Pages",
+          CATEGORIES: "Categories",
+          TAGS: "Tags",
+          UNTITLED: "(Untitled)"
         },
         CONTENT_URL: ""
       }
@@ -54,7 +179,9 @@ export default {
   },
   watch: {
     show() {
-      this.checkME();
+      this.$nextTick(() => {
+        this.focusInput();
+      });
     }
   },
   methods: {
@@ -92,173 +219,38 @@ export default {
       vm.JSON.tags = resolveTaxonomiesDate(tags);
       vm.JSON.categories = resolveTaxonomiesDate(categories);
     },
-    closeSearchBox() {
-      this.$emit("SearchBoxOff");
+    hideSearchBox() {
+      this.$emit("hideSearchBox");
+    },
+    showSearchBox() {
+      this.$emit("showSearchBox");
+    },
+    toggleMenu() {
+      this.$emit("toggleMenu");
+    },
+    focusInput() {
+      this.$refs.search.focus();
     },
     onHotkey(event) {
       if (event.code === "Escape") {
-        this.closeSearchBox();
+        this.hideSearchBox();
       }
     },
-    checkME() {
-      const vm = this;
-      let CONFIG = {
-        TRANSLATION: {
-          POSTS: "文章",
-          PAGES: "頁面",
-          CATEGORIES: "分類",
-          TAGS: "標籤",
-          UNTITLED: "(無標題)"
-        },
-        CONTENT_URL: "/assets/content.json"
-      };
-      var $main = $(".ins-search");
-      var $input = $main.find(".ins-search-input");
-      var $wrapper = $main.find(".ins-section-wrapper");
-      var $container = $main.find(".ins-section-container");
-      $main.parent().remove(".ins-search");
-      $("body").append($main);
-
-      function section(title) {
-        return $("<section>")
-          .addClass("ins-section")
-          .append(
-            $("<header>")
-              .addClass("ins-section-header")
-              .text(title)
-          );
-      }
-
-      function searchItem(icon, title, slug, preview, url) {
-        return $("<div>")
-          .addClass("ins-selectable")
-          .addClass("ins-search-item")
-          .append(
-            $("<header>")
-              .append(
-                $("<i>")
-                  .addClass("fa")
-                  .addClass("fa-" + icon)
-              )
-              .append(
-                $("<span>")
-                  .addClass("ins-title")
-                  .text(
-                    title != null && title !== ""
-                      ? title
-                      : CONFIG.TRANSLATION["UNTITLED"]
-                  )
-              )
-              .append(
-                slug
-                  ? $("<span>")
-                      .addClass("ins-slug")
-                      .text(slug)
-                  : null
-              )
-          )
-          .append(
-            preview
-              ? $("<p>")
-                  .addClass("ins-search-preview")
-                  .text(preview)
-              : null
-          )
-          .attr("data-url", url);
-      }
-
-      function sectionFactory(type, array) {
-        var sectionTitle;
-        var $searchItems;
-        if (array.length === 0) return null;
-        sectionTitle = CONFIG.TRANSLATION[type];
-        switch (type) {
-          case "POSTS":
-          case "PAGES":
-            $searchItems = array.map(function(item) {
-              // Use config.root instead of permalink to fix url issue
-              return searchItem(
-                "file",
-                item.title,
-                null,
-                item.text.slice(0, 150),
-                item.link
-              );
-            });
-            break;
-          case "CATEGORIES":
-          case "TAGS":
-            $searchItems = array.map(function(item) {
-              return searchItem(
-                type === "CATEGORIES" ? "folder" : "tag",
-                item.name,
-                item.slug,
-                null,
-                item.link
-              );
-            });
-            break;
-          default:
-            return null;
-        }
-        return section(sectionTitle).append($searchItems);
-      }
-
-      function parseKeywords(keywords) {
-        return keywords
-          .split(" ")
-          .filter(function(keyword) {
-            return !!keyword;
-          })
-          .map(function(keyword) {
-            return keyword.toUpperCase();
-          });
-      }
-
-      /**
-       * Judge if a given post/page/category/tag contains all of the keywords.
-       * @param Object            obj     Object to be weighted
-       * @param Array<String>     fields  Object's fields to find matches
-       */
-      function filter(keywords, obj, fields) {
-        var keywordArray = parseKeywords(keywords);
-        var containKeywords = keywordArray.filter(function(keyword) {
-          var containFields = fields.filter(function(field) {
-            if (!obj.hasOwnProperty(field)) return false;
-            if (obj[field].toUpperCase().indexOf(keyword) > -1) return true;
-          });
-          if (containFields.length > 0) return true;
-          return false;
+    parseKeywords(keywords) {
+      return keywords
+        .split(" ")
+        .filter(function(keyword) {
+          return !!keyword;
+        })
+        .map(function(keyword) {
+          return keyword.toUpperCase();
         });
-        return containKeywords.length === keywordArray.length;
-      }
-
-      function filterFactory(keywords) {
-        return {
-          POST: function(obj) {
-            return filter(keywords, obj, ["title", "text"]);
-          },
-          PAGE: function(obj) {
-            return filter(keywords, obj, ["title", "text"]);
-          },
-          CATEGORY: function(obj) {
-            return filter(keywords, obj, ["name", "slug"]);
-          },
-          TAG: function(obj) {
-            return filter(keywords, obj, ["name", "slug"]);
-          }
-        };
-      }
-
-      /**
-       * Calculate the weight of a matched post/page/category/tag.
-       * @param Object            obj     Object to be weighted
-       * @param Array<String>     fields  Object's fields to find matches
-       * @param Array<Integer>    weights Weight of every field
-       */
+    },
+    weightFactory(keywords) {
+      const vm = this;
       function weight(keywords, obj, fields, weights) {
         var value = 0;
-        parseKeywords(keywords).forEach(function(keyword) {
+        vm.parseKeywords(keywords).forEach(function(keyword) {
           var pattern = new RegExp(keyword, "img"); // Global, Multi-line, Case-insensitive
           fields.forEach(function(field, index) {
             if (obj.hasOwnProperty(field)) {
@@ -270,169 +262,100 @@ export default {
         return value;
       }
 
-      function weightFactory(keywords) {
-        return {
-          POST: function(obj) {
-            return weight(keywords, obj, ["title", "text"], [3, 1]);
-          },
-          PAGE: function(obj) {
-            return weight(keywords, obj, ["title", "text"], [3, 1]);
-          },
-          CATEGORY: function(obj) {
-            return weight(keywords, obj, ["name", "slug"], [1, 1]);
-          },
-          TAG: function(obj) {
-            return weight(keywords, obj, ["name", "slug"], [1, 1]);
-          }
-        };
-      }
-
-      function search(json, keywords) {
-        var WEIGHTS = weightFactory(keywords);
-        var FILTERS = filterFactory(keywords);
-        var posts = json.posts;
-        var pages = json.pages;
-        var tags = json.tags;
-        var categories = json.categories;
-        return {
-          posts: posts
-            .filter(FILTERS.POST)
-            .sort(function(a, b) {
-              return WEIGHTS.POST(b) - WEIGHTS.POST(a);
-            })
-            .slice(0, 5),
-          pages: pages
-            .filter(FILTERS.PAGE)
-            .sort(function(a, b) {
-              return WEIGHTS.PAGE(b) - WEIGHTS.PAGE(a);
-            })
-            .slice(0, 5),
-          categories: categories
-            .filter(FILTERS.CATEGORY)
-            .sort(function(a, b) {
-              return WEIGHTS.CATEGORY(b) - WEIGHTS.CATEGORY(a);
-            })
-            .slice(0, 5),
-          tags: tags
-            .filter(FILTERS.TAG)
-            .sort(function(a, b) {
-              return WEIGHTS.TAG(b) - WEIGHTS.TAG(a);
-            })
-            .slice(0, 5)
-        };
-      }
-
-      function searchResultToDOM(searchResult) {
-        $container.empty();
-        for (var key in searchResult) {
-          $container.append(
-            sectionFactory(key.toUpperCase(), searchResult[key])
-          );
+      return {
+        POST: function(obj) {
+          return weight(keywords, obj, ["title", "text"], [3, 1]);
+        },
+        PAGE: function(obj) {
+          return weight(keywords, obj, ["title", "text"], [3, 1]);
+        },
+        CATEGORY: function(obj) {
+          return weight(keywords, obj, ["name", "slug"], [1, 1]);
+        },
+        TAG: function(obj) {
+          return weight(keywords, obj, ["name", "slug"], [1, 1]);
         }
-      }
-
-      function scrollTo($item) {
-        if ($item.length === 0) return;
-        var wrapperHeight = $wrapper[0].clientHeight;
-        var itemTop = $item.position().top - $wrapper.scrollTop();
-        var itemBottom = $item[0].clientHeight + $item.position().top;
-        if (itemBottom > wrapperHeight + $wrapper.scrollTop()) {
-          $wrapper.scrollTop(itemBottom - $wrapper[0].clientHeight);
-        }
-        if (itemTop < 0) {
-          $wrapper.scrollTop($item.position().top);
-        }
-      }
-
-      function selectItemByDiff(value) {
-        var $items = $.makeArray($container.find(".ins-selectable"));
-        var prevPosition = -1;
-        $items.forEach(function(item, index) {
-          if ($(item).hasClass("active")) {
-            prevPosition = index;
-            return;
-          }
+      };
+    },
+    filterFactory(keywords) {
+      const vm = this;
+      function filter(keywords, obj, fields) {
+        var keywordArray = vm.parseKeywords(keywords);
+        var containKeywords = keywordArray.filter(function(keyword) {
+          var containFields = fields.filter(function(field) {
+            if (!obj.hasOwnProperty(field)) return false;
+            if (obj[field].toUpperCase().indexOf(keyword) > -1) return true;
+          });
+          if (containFields.length > 0) return true;
+          return false;
         });
-        var nextPosition =
-          ($items.length + prevPosition + value) % $items.length;
-        $($items[prevPosition]).removeClass("active");
-        $($items[nextPosition]).addClass("active");
-        scrollTo($($items[nextPosition]));
+        return containKeywords.length === keywordArray.length;
       }
 
-      function gotoLink($item) {
-        if ($item && $item.length) {
-          location.href = $item.attr("data-url");
+      return {
+        POST: function(obj) {
+          return filter(keywords, obj, ["title", "text"]);
+        },
+        PAGE: function(obj) {
+          return filter(keywords, obj, ["title", "text"]);
+        },
+        CATEGORY: function(obj) {
+          return filter(keywords, obj, ["name", "slug"]);
+        },
+        TAG: function(obj) {
+          return filter(keywords, obj, ["name", "slug"]);
         }
-      }
-
-      // $.getJSON(CONFIG.CONTENT_URL, function(json) {
-      //   if (location.hash.trim() === "#ins-search") {
-      //     $main.addClass("show");
-      //   }
-      //   $input.on("input", function() {
-      //     var keywords = $(this).val();
-      //     searchResultToDOM(search(json, keywords));
-      //   });
-      //   $input.trigger("input");
-      // });
-
-      let json = vm.JSON;
-      function getJSON(json) {
-        if (location.hash.trim() === "#ins-search") {
-          $main.addClass("show");
-        }
-        $input.on("input", function() {
-          var keywords = $(this).val();
-          searchResultToDOM(search(json, keywords));
-        });
-        $input.trigger("input");
-      }
-      getJSON(json);
-
-      var touch = false;
-      $(document)
-        .on("click focus", ".navbar-main .search", function() {
-          $main.addClass("show");
-          $main.find(".ins-search-input").focus();
-        })
-        .on("click touchend", ".ins-search-item", function(e) {
-          if (e.type !== "click" && !touch) {
-            return;
-          }
-          gotoLink($(this));
-          touch = false;
-        })
-        .on("click touchend", ".ins-close", function(e) {
-          if (e.type !== "click" && !touch) {
-            return;
-          }
-          $main.removeClass("show");
-          touch = false;
-        })
-        .on("keydown", function(e) {
-          if (!$main.hasClass("show")) return;
-          switch (e.keyCode) {
-            case 27: // ESC
-              $main.removeClass("show");
-              break;
-            case 38: // UP
-              selectItemByDiff(-1);
-              break;
-            case 40: // DOWN
-              selectItemByDiff(1);
-              break;
-            case 13: //ENTER
-              gotoLink($container.find(".ins-selectable.active").eq(0));
-              break;
-          }
-        })
-        .on("touchstart", function(e) {
-          touch = true;
-        })
-        .on("touchmove", function(e) {
-          touch = false;
-        });
+      };
+    },
+    doSearch(json, keywords) {
+      const vm = this;
+      var WEIGHTS = vm.weightFactory(keywords);
+      var FILTERS = vm.filterFactory(keywords);
+      var posts = json.posts;
+      var pages = json.pages;
+      var tags = json.tags;
+      var categories = json.categories;
+      return {
+        posts: posts
+          .filter(FILTERS.POST)
+          .sort(function(a, b) {
+            return WEIGHTS.POST(b) - WEIGHTS.POST(a);
+          })
+          .slice(0, 5),
+        pages: pages
+          .filter(FILTERS.PAGE)
+          .sort(function(a, b) {
+            return WEIGHTS.PAGE(b) - WEIGHTS.PAGE(a);
+          })
+          .slice(0, 5),
+        categories: categories
+          .filter(FILTERS.CATEGORY)
+          .sort(function(a, b) {
+            return WEIGHTS.CATEGORY(b) - WEIGHTS.CATEGORY(a);
+          })
+          .slice(0, 5),
+        tags: tags
+          .filter(FILTERS.TAG)
+          .sort(function(a, b) {
+            return WEIGHTS.TAG(b) - WEIGHTS.TAG(a);
+          })
+          .slice(0, 5)
+      };
+    },
+    goToLink(url) {
+      this.hideSearchBox();
+      this.toggleMenu();
+      this.$router.push(url);
+      // location.href = url;
+    }
+  },
+  computed: {
+    suggestions() {
+      const vm = this;
+      const keywords = vm.query;
+      const json = vm.JSON;
+      const suggestions = vm.doSearch(json, keywords);
+      return suggestions;
     }
   },
   mounted() {

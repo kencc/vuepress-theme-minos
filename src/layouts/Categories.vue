@@ -13,14 +13,11 @@
     <section class="section">
       <div class="container">
         <div class="columns is-variable is-1 is-multiline is-mobile">
-          <span
-            class="column is-narrow"
-            v-for="category in categories"
-            :key="category.name"
-          >
-            <a class="tag is-light article-tag" :href="category.path"
-              >{{ category.name }} ({{ category.pages.length }})</a
-            >
+          <span class="column is-narrow" v-for="category in categories" :key="category.name">
+            <router-link
+              class="tag is-light article-tag"
+              :to="category.path"
+            >{{ category.name }} ({{ category.pages.length }})</router-link>
           </span>
         </div>
       </div>
@@ -33,7 +30,7 @@ export default {
   computed: {
     categories() {
       return this.$frontmatterKey.list;
-    },
-  },
+    }
+  }
 };
 </script>
