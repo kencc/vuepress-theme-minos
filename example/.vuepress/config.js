@@ -1,16 +1,9 @@
 // .vuepress/config.js
 module.exports = {
+  theme: "vuepress-theme-minos",
   title: "Minos",
   description: "VuePress theme - Minos",
-  head: [
-    ["link", { rel: "icon", href: "/assets/img/favicon.png" }],
-    // [
-    //   "script",
-    //   {
-    //     src: "//cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js",
-    //   },
-    // ],
-  ],
+  head: [["link", { rel: "icon", href: "/assets/img/favicon.png" }]],
   markdown: {
     lineNumbers: true,
     anchor: { permalinkSymbol: "" },
